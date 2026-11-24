@@ -481,3 +481,4 @@ function initializeClinic() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeClinic);
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
