@@ -2,728 +2,315 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f9edf1">
-    <title>Berry Matcha | Health Clinic</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8e9ef">
+  <title>Berry Matcha Medical Clinic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-
 <body>
 
-<!-- INTRO -->
-<section id="intro" class="intro">
-    <div class="intro-flower flower-a">✿</div>
-    <div class="intro-flower flower-b">❀</div>
-
+  <!-- HALAMAN PEMBUKA -->
+  <section id="intro" class="intro">
+    <div class="intro-orbit orbit-one"></div>
+    <div class="intro-orbit orbit-two"></div>
     <div class="intro-content">
-        <div class="intro-logo">
-            <i class="fa-solid fa-heart-pulse"></i>
-        </div>
-
-        <span class="intro-tag">YOUR PERSONAL HEALTH SPACE</span>
-
-        <h1>Berry Matcha</h1>
-        <h2>Health & Wellness Clinic</h2>
-
-        <p>
-            Tempat untuk mengenal kesehatan tubuh,
-            memahami perasaan, dan merawat diri
-            dengan lebih baik setiap hari.
-        </p>
-
-        <button id="enterButton" class="primary-btn">
-            Masuk ke Klinik <i class="fa-solid fa-arrow-right"></i>
-        </button>
-
-        <small>Care for your body, kindness for your mind ♡</small>
+      <div class="clinic-logo">🌸</div>
+      <p class="intro-label">WELCOME TO YOUR HEALTH SPACE</p>
+      <h1>Berry <span>Matcha</span></h1>
+      <h2>MEDICAL CLINIC</h2>
+      <p class="intro-text">A little care for a healthier you.</p>
+      <button id="enterButton" class="primary-btn">
+        Masuk Klinik <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <div class="intro-decoration">✿　🌿　✿</div>
     </div>
-</section>
+    <span class="floating flower-a">🌷</span>
+    <span class="floating flower-b">🩺</span>
+    <span class="floating flower-c">🌿</span>
+  </section>
 
-<!-- APPLICATION -->
-<div id="app" class="app hidden">
+  <!-- APLIKASI UTAMA -->
+  <div id="app" class="app hidden">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Buka menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="brand">
+        <div class="brand-logo">🌸</div>
+        <div>
+          <h2>Berry Matcha</h2>
+          <span>Medical Clinic</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="online-dot"></span>
+        <span class="topbar-status">Health space</span>
+        <div class="topbar-avatar">♡</div>
+      </div>
+    </header>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-        <div class="brand">
-            <div class="brand-icon">
-                <i class="fa-solid fa-heart-pulse"></i>
-            </div>
-            <div>
-                <h2>Berry Matcha</h2>
-                <span>HEALTH CLINIC</span>
-            </div>
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-profile">
+          <div class="profile-avatar">👩🏻‍⚕️</div>
+          <h3>Patient Center</h3>
+          <p>Care begins with you</p>
         </div>
 
-        <div class="menu-label">MAIN MENU</div>
+        <p class="menu-label">MAIN MENU</p>
+        <button class="nav active" data-page="dashboard"><i class="fa-solid fa-house"></i> Dashboard</button>
+        <button class="nav" data-page="general"><i class="fa-solid fa-stethoscope"></i> Dokter Umum</button>
+        <button class="nav" data-page="psychology"><i class="fa-solid fa-brain"></i> Psikologi</button>
+        <button class="nav" data-page="psychiatry"><i class="fa-solid fa-heart-pulse"></i> Psikiatri</button>
+        <button class="nav" data-page="pharmacy"><i class="fa-solid fa-capsules"></i> Apotek</button>
 
-        <nav class="navigation">
-
-            <button class="nav active" data-page="dashboard">
-                <i class="fa-solid fa-house"></i>
-                <span>Dashboard</span>
-            </button>
-
-            <button class="nav" data-page="general">
-                <i class="fa-solid fa-user-doctor"></i>
-                <span>Dokter Umum</span>
-            </button>
-
-            <button class="nav" data-page="psychology">
-                <i class="fa-solid fa-brain"></i>
-                <span>Psikolog</span>
-            </button>
-
-            <button class="nav" data-page="psychiatry">
-                <i class="fa-solid fa-heart"></i>
-                <span>Psikiater</span>
-            </button>
-
-            <button class="nav" data-page="pharmacy">
-                <i class="fa-solid fa-capsules"></i>
-                <span>Apotek</span>
-            </button>
-
-            <button class="nav" data-page="checkup">
-                <i class="fa-solid fa-stethoscope"></i>
-                <span>Pemeriksaan Harian</span>
-            </button>
-
-            <button class="nav" data-page="diary">
-                <i class="fa-solid fa-book-open"></i>
-                <span>Diary Pasien</span>
-            </button>
-
-            <button class="nav" data-page="history">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                <span>Riwayat</span>
-            </button>
-
-            <button class="nav" data-page="about">
-                <i class="fa-solid fa-circle-info"></i>
-                <span>Tentang Klinik</span>
-            </button>
-
-        </nav>
-
-        <div class="sidebar-bottom">
-            <div class="bottom-flower">🌿</div>
-            <h4>Take care of yourself</h4>
-            <p>Kesehatan dimulai dari perhatian kecil terhadap diri sendiri.</p>
-        </div>
+        <p class="menu-label">PATIENT SPACE</p>
+        <button class="nav" data-page="checkup"><i class="fa-solid fa-notes-medical"></i> Pemeriksaan</button>
+        <button class="nav" data-page="diary"><i class="fa-solid fa-book-medical"></i> Diary Pasien</button>
+        <button class="nav" data-page="history"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat</button>
+        <button class="nav" data-page="about"><i class="fa-solid fa-circle-info"></i> Tentang Klinik</button>
 
         <div class="sidebar-footer">
-            BERRY MATCHA © 2026
+          <span>🌿</span>
+          <div><strong>Take it easy</strong><small>Your health matters.</small></div>
         </div>
+      </aside>
 
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main">
-
-        <header class="topbar">
-            <div>
-                <span class="top-caption">BERRY MATCHA HEALTH CLINIC</span>
-                <h2 id="pageTitle">Dashboard</h2>
-            </div>
-
-            <div class="top-profile">
-                <div class="avatar">BM</div>
-                <div class="profile-text">
-                    <b>Patient</b>
-                    <small>Welcome back ♡</small>
-                </div>
-            </div>
-        </header>
+      <main class="main-content">
 
         <!-- DASHBOARD -->
-        <section class="page active" id="dashboard">
-
-            <div class="hero">
-                <div class="hero-content">
-                    <span class="hero-label">♡ YOUR HEALTH MATTERS</span>
-
-                    <h1>How are you<br>feeling today?</h1>
-
-                    <p>
-                        Selamat datang di Berry Matcha.
-                        Mari perhatikan kesehatan tubuh dan
-                        perasaanmu hari ini.
-                    </p>
-
-                    <button class="primary-btn" data-go="checkup">
-                        Mulai Pemeriksaan
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
-
-                <div class="hero-art">
-                    <div class="hero-circle">
-                        <i class="fa-solid fa-staff-snake"></i>
-                    </div>
-                    <span class="floating flower-one">✿</span>
-                    <span class="floating flower-two">❀</span>
-                    <span class="floating flower-three">✧</span>
-                </div>
+        <section id="dashboard" class="page active">
+          <div class="hero">
+            <div class="hero-content">
+              <span class="eyebrow"><i class="fa-solid fa-heart"></i> YOUR PERSONAL HEALTH SPACE</span>
+              <h1>Halo, selamat datang! 🌷</h1>
+              <p>Setiap hari adalah kesempatan untuk merawat tubuh dan pikiranmu. Bagaimana kabarmu hari ini?</p>
+              <button class="primary-btn" data-go="checkup">Mulai Pemeriksaan <i class="fa-solid fa-arrow-right"></i></button>
             </div>
-
-            <div class="date-line">
-                <i class="fa-regular fa-calendar"></i>
-                <span id="todayDate"></span>
+            <div class="hero-art">
+              <div class="hero-circle">👩🏻‍⚕️</div>
+              <span class="hero-plus">✚</span>
+              <span class="hero-flower">🌸</span>
             </div>
+          </div>
 
-            <div class="section-heading">
-                <div>
-                    <span class="section-caption">OUR MEDICAL SERVICES</span>
-                    <h2>Pelayanan Klinik</h2>
-                </div>
-                <span class="section-flower">✿</span>
-            </div>
+          <div class="welcome-strip">
+            <div class="welcome-icon"><i class="fa-regular fa-calendar-check"></i></div>
+            <div><strong id="welcomeDate">Hari ini</strong><p>Jangan lupa perhatikan kondisi kesehatanmu.</p></div>
+            <span class="strip-flower">🌿</span>
+          </div>
 
-            <div class="service-grid">
+          <div class="section-title">
+            <div><span class="eyebrow">OUR SERVICES</span><h2>Layanan Klinik</h2><p>Pilih layanan sesuai kebutuhanmu.</p></div>
+          </div>
 
-                <article class="service-card pink" data-go="general">
-                    <div class="service-icon">
-                        <i class="fa-solid fa-user-doctor"></i>
-                    </div>
-                    <h3>Dokter Umum</h3>
-                    <p>Informasi awal mengenai keluhan kesehatan tubuh.</p>
-                    <span>Periksa sekarang →</span>
-                </article>
+          <div class="service-grid">
+            <button class="service-card card-pink" data-go="general">
+              <span class="service-icon">🩺</span><span class="service-tag">PHYSICAL HEALTH</span>
+              <h3>Dokter Umum</h3><p>Informasi awal mengenai keluhan kesehatan tubuh.</p><span class="service-link">Kunjungi layanan <i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+            <button class="service-card card-green" data-go="psychology">
+              <span class="service-icon">🧠</span><span class="service-tag">EMOTIONAL CARE</span>
+              <h3>Psikologi</h3><p>Kenali emosi, pikiran, dan perasaanmu.</p><span class="service-link">Kunjungi layanan <i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+            <button class="service-card card-lilac" data-go="psychiatry">
+              <span class="service-icon">💗</span><span class="service-tag">MENTAL HEALTH</span>
+              <h3>Psikiatri</h3><p>Informasi seputar kesehatan mental.</p><span class="service-link">Kunjungi layanan <i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+            <button class="service-card card-cream" data-go="pharmacy">
+              <span class="service-icon">💊</span><span class="service-tag">MEDICINE CENTER</span>
+              <h3>Apotek</h3><p>Pelajari informasi dasar mengenai obat.</p><span class="service-link">Kunjungi layanan <i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+            <button class="service-card card-blue" data-go="checkup">
+              <span class="service-icon">🩻</span><span class="service-tag">DAILY MONITORING</span>
+              <h3>Pemeriksaan</h3><p>Catat kondisi tubuh dan kebiasaan harian.</p><span class="service-link">Kunjungi layanan <i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+            <button class="service-card card-rose" data-go="diary">
+              <span class="service-icon">📔</span><span class="service-tag">PERSONAL JOURNAL</span>
+              <h3>Diary Pasien</h3><p>Tempat menyimpan cerita dan perasaan.</p><span class="service-link">Kunjungi layanan <i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+          </div>
 
-                <article class="service-card green" data-go="psychology">
-                    <div class="service-icon">
-                        <i class="fa-solid fa-brain"></i>
-                    </div>
-                    <h3>Psikolog</h3>
-                    <p>Kenali perasaan dan kondisi emosionalmu.</p>
-                    <span>Mulai refleksi →</span>
-                </article>
-
-                <article class="service-card purple" data-go="psychiatry">
-                    <div class="service-icon">
-                        <i class="fa-solid fa-heart"></i>
-                    </div>
-                    <h3>Psikiater</h3>
-                    <p>Informasi mengenai kesehatan mental.</p>
-                    <span>Pelajari lebih lanjut →</span>
-                </article>
-
-                <article class="service-card yellow" data-go="pharmacy">
-                    <div class="service-icon">
-                        <i class="fa-solid fa-capsules"></i>
-                    </div>
-                    <h3>Apotek</h3>
-                    <p>Kenali kegunaan dan perhatian penggunaan obat.</p>
-                    <span>Lihat informasi →</span>
-                </article>
-
-            </div>
-
-            <div class="section-heading">
-                <div>
-                    <span class="section-caption">YOUR PERSONAL RECORD</span>
-                    <h2>Aktivitas Pasien</h2>
-                </div>
-            </div>
-
-            <div class="summary-grid">
-
-                <div class="summary-card">
-                    <i class="fa-solid fa-notes-medical"></i>
-                    <div>
-                        <small>Total Pemeriksaan</small>
-                        <h2 id="checkupCount">0</h2>
-                    </div>
-                </div>
-
-                <div class="summary-card">
-                    <i class="fa-solid fa-book-open"></i>
-                    <div>
-                        <small>Diary Tersimpan</small>
-                        <h2 id="diaryCount">0</h2>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="reminder">
-                <div class="reminder-icon">🌷</div>
-                <div>
-                    <b>Gentle Reminder</b>
-                    <p>
-                        Jangan lupa makan teratur, minum air putih,
-                        beristirahat, dan memperhatikan kesehatanmu.
-                    </p>
-                </div>
-            </div>
-
+          <div class="quote-card">
+            <span>🌷</span><div><h3>“Your health is your greatest wealth.”</h3><p>Merawat diri bukan hal yang egois. Kamu juga berhak merasa sehat dan bahagia.</p></div>
+          </div>
         </section>
 
         <!-- DOKTER UMUM -->
-        <section class="page" id="general">
-
-            <div class="page-heading">
-                <span>GENERAL PRACTITIONER</span>
-                <h1>Pelayanan Dokter Umum</h1>
-                <p>Ceritakan kondisi tubuhmu untuk mendapatkan informasi edukasi kesehatan awal.</p>
-            </div>
-
-            <div class="doctor-banner">
-                <div class="doctor-symbol">
-                    <i class="fa-solid fa-user-doctor"></i>
-                </div>
-                <div>
-                    <h2>General Medical Consultation</h2>
-                    <p>Kenali keluhan dan perhatikan kondisi kesehatan tubuhmu.</p>
-                    <small><i class="fa-solid fa-circle-check"></i> Pemeriksaan edukasi awal</small>
-                </div>
-            </div>
-
+        <section id="general" class="page">
+          <div class="page-heading">
+            <span class="eyebrow">🩺 GENERAL PRACTICE</span>
+            <h1>Konsultasi Dokter Umum</h1>
+            <p>Ceritakan keluhan yang sedang kamu rasakan untuk mendapatkan informasi kesehatan umum.</p>
+          </div>
+          <div class="two-column">
             <div class="form-card">
-                <h3><i class="fa-solid fa-notes-medical"></i> Formulir Keluhan Pasien</h3>
-
-                <label>Nama pasien</label>
-                <input type="text" id="patientName" placeholder="Masukkan nama">
-
-                <label>Apa keluhan yang kamu rasakan?</label>
-                <select id="symptom">
-                    <option value="">Pilih keluhan</option>
-                    <option value="headache">Sakit kepala</option>
-                    <option value="fever">Demam</option>
-                    <option value="cough">Batuk atau pilek</option>
-                    <option value="stomach">Sakit perut</option>
-                    <option value="dizzy">Pusing</option>
-                    <option value="fatigue">Badan lemas</option>
-                    <option value="other">Keluhan lainnya</option>
-                </select>
-
-                <label>Sudah berapa lama?</label>
-                <select id="duration">
-                    <option value="">Pilih durasi</option>
-                    <option>Baru hari ini</option>
-                    <option>1–2 hari</option>
-                    <option>3–5 hari</option>
-                    <option>Lebih dari 5 hari</option>
-                </select>
-
-                <label>Bagaimana tingkat keluhanmu?</label>
-                <select id="severity">
-                    <option value="">Pilih kondisi</option>
-                    <option value="mild">Ringan</option>
-                    <option value="moderate">Sedang</option>
-                    <option value="severe">Berat</option>
-                </select>
-
-                <label>Gejala tambahan</label>
-                <textarea id="otherSymptoms" rows="4" placeholder="Ceritakan gejala lainnya jika ada..."></textarea>
-
-                <button class="primary-btn" id="generalButton">
-                    Lihat Informasi Kesehatan
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-
-                <div class="result-box hidden" id="generalResult" aria-live="polite"></div>
-
-                <div class="safety-note">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    Hasil bukan diagnosis dokter dan tidak menggantikan pemeriksaan langsung. Jika mengalami sesak napas, nyeri dada, pingsan, atau kondisi darurat, segera cari pertolongan medis.
-                </div>
+              <div class="card-heading"><span class="heading-icon pink-icon">🩺</span><div><h2>Formulir Keluhan</h2><p>Isi informasi berikut dengan benar.</p></div></div>
+              <label for="patientName">Nama pasien</label>
+              <input id="patientName" type="text" placeholder="Masukkan nama">
+              <label for="symptom">Keluhan utama</label>
+              <select id="symptom"><option value="">Pilih keluhan</option><option value="sakit kepala">Sakit kepala</option><option value="demam">Demam</option><option value="batuk">Batuk</option><option value="sakit perut">Sakit perut</option><option value="pusing">Pusing</option><option value="lelah">Tubuh terasa lelah</option><option value="lainnya">Keluhan lainnya</option></select>
+              <label for="duration">Lama keluhan</label>
+              <input id="duration" type="text" placeholder="Contoh: sejak kemarin">
+              <label for="severity">Tingkat keluhan</label>
+              <select id="severity"><option value="">Pilih tingkat keluhan</option><option value="ringan">Ringan</option><option value="sedang">Sedang</option><option value="berat">Berat</option></select>
+              <label for="otherSymptoms">Keluhan tambahan</label>
+              <textarea id="otherSymptoms" rows="3" placeholder="Ceritakan gejala lain jika ada..."></textarea>
+              <button id="generalButton" class="primary-btn full-btn">Kirim Konsultasi <i class="fa-solid fa-paper-plane"></i></button>
+              <div id="generalResult" class="result-box hidden"></div>
             </div>
-
+            <aside class="side-note">
+              <div class="note-icon">🩺</div><h3>Health Information</h3>
+              <p>Keluhan kesehatan dapat dipengaruhi oleh banyak faktor. Catat gejala yang dirasakan dan perhatikan perubahan kondisimu.</p>
+              <hr><strong>Perlu bantuan medis?</strong><p>Jika keluhan berat, memburuk, atau mengganggu aktivitas, mintalah bantuan orang dewasa tepercaya dan periksakan diri ke fasilitas kesehatan.</p>
+            </aside>
+          </div>
         </section>
 
-        <!-- PSIKOLOG -->
-        <section class="page" id="psychology">
-
-            <div class="page-heading">
-                <span>PSYCHOLOGY DEPARTMENT</span>
-                <h1>Ruang Konsultasi Psikologi</h1>
-                <p>Setiap perasaan layak didengarkan. Mari mengenali apa yang sedang kamu rasakan.</p>
-            </div>
-
-            <div class="doctor-banner psychology-banner">
-                <div class="doctor-symbol">
-                    <i class="fa-solid fa-brain"></i>
-                </div>
-                <div>
-                    <h2>Emotional Wellness</h2>
-                    <p>Ruang refleksi untuk memahami emosi, pikiran, dan keseharian.</p>
-                </div>
-            </div>
-
-            <div class="form-card">
-                <h3><i class="fa-solid fa-heart"></i> Bagaimana Harimu?</h3>
-
-                <label>Bagaimana perasaanmu hari ini?</label>
-                <select id="emotion">
-                    <option value="">Pilih perasaan</option>
-                    <option value="happy">Bahagia</option>
-                    <option value="calm">Tenang</option>
-                    <option value="sad">Sedih</option>
-                    <option value="anxious">Cemas</option>
-                    <option value="angry">Marah</option>
-                    <option value="tired">Lelah secara emosional</option>
-                </select>
-
-                <label>Bagaimana kualitas tidurmu?</label>
-                <select id="sleep">
-                    <option value="">Pilih jawaban</option>
-                    <option value="good">Nyenyak</option>
-                    <option value="average">Biasa saja</option>
-                    <option value="poor">Kurang baik</option>
-                </select>
-
-                <label>Apakah kamu merasa tertekan akhir-akhir ini?</label>
-                <select id="stress">
-                    <option value="">Pilih jawaban</option>
-                    <option value="no">Tidak</option>
-                    <option value="sometimes">Kadang-kadang</option>
-                    <option value="often">Sering</option>
-                </select>
-
-                <label>Apa yang ingin kamu ceritakan hari ini?</label>
-                <textarea id="thoughts" rows="5" placeholder="Tuliskan apa yang sedang kamu pikirkan..."></textarea>
-
-                <button class="primary-btn" id="psychologyButton">
-                    Lihat Refleksi Emosiku
-                    <i class="fa-solid fa-heart"></i>
-                </button>
-
-                <div class="result-box hidden" id="psychologyResult" aria-live="polite"></div>
-
-                <div class="safety-note">
-                    <i class="fa-solid fa-heart"></i>
-                    Refleksi ini bukan tes psikologi, diagnosis, ataupun pengganti konsultasi psikolog profesional.
-                </div>
-            </div>
-
+        <!-- PSIKOLOGI -->
+        <section id="psychology" class="page">
+          <div class="page-heading">
+            <span class="eyebrow">🧠 PSYCHOLOGY SPACE</span>
+            <h1>Ruang Psikologi</h1>
+            <p>Mengenali perasaan adalah salah satu langkah untuk memahami diri sendiri.</p>
+          </div>
+          <div class="form-card">
+            <div class="card-heading"><span class="heading-icon green-icon">🌱</span><div><h2>Refleksi Emosi</h2><p>Jawab sesuai dengan keadaanmu saat ini.</p></div></div>
+            <label for="emotion">Bagaimana perasaanmu hari ini?</label>
+            <select id="emotion"><option value="">Pilih perasaan</option><option value="happy">😊 Bahagia</option><option value="calm">😌 Tenang</option><option value="sad">😔 Sedih</option><option value="anxious">😟 Cemas</option><option value="angry">😠 Marah</option><option value="tired">😴 Lelah</option></select>
+            <label for="sleep">Bagaimana kualitas tidurmu?</label>
+            <select id="sleep"><option value="">Pilih jawaban</option><option value="baik">Baik</option><option value="cukup">Cukup</option><option value="kurang">Kurang</option></select>
+            <label for="stress">Bagaimana tingkat tekanan yang kamu rasakan?</label>
+            <select id="stress"><option value="">Pilih jawaban</option><option value="rendah">Rendah</option><option value="sedang">Sedang</option><option value="tinggi">Tinggi</option></select>
+            <label for="thoughts">Apa yang sedang memenuhi pikiranmu?</label>
+            <textarea id="thoughts" rows="4" placeholder="Kamu boleh menuliskan ceritamu di sini..."></textarea>
+            <button id="psychologyButton" class="primary-btn">Lihat Refleksi <i class="fa-solid fa-heart"></i></button>
+            <div id="psychologyResult" class="result-box hidden"></div>
+          </div>
+          <div class="gentle-banner">🌷 Tidak apa-apa jika hari ini terasa berat. Perasaanmu layak didengarkan.</div>
         </section>
 
-        <!-- PSIKIATER -->
-        <section class="page" id="psychiatry">
-
-            <div class="page-heading">
-                <span>PSYCHIATRY DEPARTMENT</span>
-                <h1>Layanan Informasi Psikiatri</h1>
-                <p>Mengenal kesehatan mental dan pentingnya bantuan profesional.</p>
-            </div>
-
-            <div class="doctor-banner psychiatry-banner">
-                <div class="doctor-symbol">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                </div>
-                <div>
-                    <h2>Mental Health Care</h2>
-                    <p>Psikiater adalah dokter yang memiliki keahlian dalam kesehatan jiwa.</p>
-                </div>
-            </div>
-
-            <div class="info-grid">
-
-                <article class="medical-info">
-                    <span>🧠</span>
-                    <h3>Mengenal Psikiater</h3>
-                    <p>
-                        Psikiater adalah dokter spesialis kedokteran jiwa
-                        yang membantu menilai dan menangani gangguan kesehatan mental.
-                    </p>
-                </article>
-
-                <article class="medical-info">
-                    <span>🌷</span>
-                    <h3>Kapan Perlu Bantuan?</h3>
-                    <p>
-                        Saat perubahan emosi, pikiran, tidur, atau perilaku
-                        berlangsung terus-menerus dan mengganggu kehidupan sehari-hari.
-                    </p>
-                </article>
-
-                <article class="medical-info">
-                    <span>💊</span>
-                    <h3>Penanganan</h3>
-                    <p>
-                        Penanganan dapat berupa konsultasi, psikoterapi,
-                        perubahan kebiasaan, atau obat sesuai penilaian dokter.
-                    </p>
-                </article>
-
-                <article class="medical-info">
-                    <span>🤍</span>
-                    <h3>Dukungan Keluarga</h3>
-                    <p>
-                        Dukungan dari keluarga, teman tepercaya, dan tenaga
-                        profesional dapat membantu proses pemulihan.
-                    </p>
-                </article>
-
-            </div>
-
-            <div class="info-panel">
-                <h3>♡ Kamu tidak harus menghadapi semuanya sendirian.</h3>
-                <p>
-                    Jika kondisi mental mengganggu aktivitas atau membuatmu
-                    merasa tidak aman, ceritakan kepada orang dewasa tepercaya
-                    dan mintalah bantuan profesional. Jika ada bahaya langsung,
-                    segera cari pertolongan darurat.
-                </p>
-            </div>
-
+        <!-- PSIKIATRI -->
+        <section id="psychiatry" class="page">
+          <div class="page-heading">
+            <span class="eyebrow">💗 MENTAL HEALTH EDUCATION</span>
+            <h1>Informasi Psikiatri</h1>
+            <p>Pelajari kesehatan mental dan kapan bantuan profesional dibutuhkan.</p>
+          </div>
+          <div class="info-grid">
+            <article class="info-card"><span>🧠</span><h3>Mengenal Kesehatan Mental</h3><p>Kesehatan mental berkaitan dengan cara seseorang berpikir, merasakan emosi, menjalin hubungan, dan menghadapi kehidupan sehari-hari.</p></article>
+            <article class="info-card"><span>🌿</span><h3>Mengelola Stres</h3><p>Istirahat cukup, aktivitas menyenangkan, mengatur waktu, dan berbicara dengan orang tepercaya dapat membantu menghadapi tekanan.</p></article>
+            <article class="info-card"><span>💚</span><h3>Perawatan Diri</h3><p>Menjaga pola tidur, makan teratur, bergerak aktif, dan memberi waktu untuk diri sendiri merupakan bagian dari perawatan diri.</p></article>
+            <article class="info-card"><span>👩🏻‍⚕️</span><h3>Konsultasi Profesional</h3><p>Psikiater adalah dokter yang memiliki keahlian dalam menangani kondisi kesehatan mental. Psikolog juga dapat membantu melalui layanan psikologis.</p></article>
+          </div>
+          <div class="notice">Jika masalah emosional berlangsung lama atau mengganggu kegiatan sehari-hari, bicarakan dengan orang dewasa tepercaya dan tenaga profesional.</div>
         </section>
 
         <!-- APOTEK -->
-        <section class="page" id="pharmacy">
-
-            <div class="page-heading">
-                <span>PHARMACY INFORMATION</span>
-                <h1>Apotek & Informasi Obat</h1>
-                <p>Pelajari fungsi obat, cara penggunaan secara umum, dan hal yang perlu diperhatikan.</p>
+        <section id="pharmacy" class="page">
+          <div class="page-heading">
+            <span class="eyebrow">💊 PHARMACY CENTER</span>
+            <h1>Apotek & Informasi Obat</h1>
+            <p>Temukan informasi dasar tentang beberapa jenis obat.</p>
+          </div>
+          <div class="form-card">
+            <input id="medicineSearch" type="search" placeholder="🔎 Cari nama obat...">
+            <div id="medicineGrid" class="medicine-grid">
+              <button class="medicine-card" data-search="paracetamol demam nyeri" data-medicine="paracetamol"><span>💊</span><h3>Paracetamol</h3><p>Informasi obat untuk demam dan nyeri.</p><small>Lihat informasi →</small></button>
+              <button class="medicine-card" data-search="oralit dehidrasi diare" data-medicine="oralit"><span>🧃</span><h3>Oralit</h3><p>Larutan untuk membantu mengganti cairan tubuh.</p><small>Lihat informasi →</small></button>
+              <button class="medicine-card" data-search="antasida asam lambung maag" data-medicine="antasida"><span>🌿</span><h3>Antasida</h3><p>Informasi obat untuk membantu meredakan asam lambung.</p><small>Lihat informasi →</small></button>
+              <button class="medicine-card" data-search="obat batuk" data-medicine="obat batuk"><span>🍃</span><h3>Obat Batuk</h3><p>Informasi umum mengenai obat batuk.</p><small>Lihat informasi →</small></button>
             </div>
-
-            <div class="pharmacy-banner">
-                <i class="fa-solid fa-prescription-bottle-medical"></i>
-                <div>
-                    <h2>Medicine Information Center</h2>
-                    <p>Gunakan obat dengan tepat dan selalu perhatikan petunjuk kemasan.</p>
-                </div>
-            </div>
-
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="search" id="medicineSearch" placeholder="Cari nama obat...">
-            </div>
-
-            <div class="medicine-grid" id="medicineGrid">
-
-                <article class="medicine-card" data-search="paracetamol demam sakit kepala nyeri">
-                    <div class="medicine-icon">💊</div>
-                    <span class="medicine-type">PEREDA NYERI & DEMAM</span>
-                    <h3>Paracetamol</h3>
-                    <p>Informasi obat untuk meredakan demam dan nyeri.</p>
-                    <button data-medicine="paracetamol">Detail Obat →</button>
-                </article>
-
-                <article class="medicine-card" data-search="oralit diare dehidrasi">
-                    <div class="medicine-icon">🧴</div>
-                    <span class="medicine-type">REHIDRASI</span>
-                    <h3>Oralit</h3>
-                    <p>Larutan untuk membantu mengganti cairan dan elektrolit.</p>
-                    <button data-medicine="oralit">Detail Obat →</button>
-                </article>
-
-                <article class="medicine-card" data-search="antasida asam lambung maag">
-                    <div class="medicine-icon">🌿</div>
-                    <span class="medicine-type">ANTASIDA</span>
-                    <h3>Antasida</h3>
-                    <p>Informasi obat untuk keluhan tertentu akibat asam lambung.</p>
-                    <button data-medicine="antasida">Detail Obat →</button>
-                </article>
-
-                <article class="medicine-card" data-search="obat batuk pilek">
-                    <div class="medicine-icon">🌸</div>
-                    <span class="medicine-type">OBAT BATUK</span>
-                    <h3>Obat Batuk</h3>
-                    <p>Kenali perbedaan obat berdasarkan jenis batuk.</p>
-                    <button data-medicine="batuk">Detail Obat →</button>
-                </article>
-
-            </div>
-
-            <div class="result-box hidden" id="medicineResult" aria-live="polite"></div>
-
-            <div class="safety-note">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                Informasi ini bukan resep. Jangan menentukan dosis sendiri. Konsultasikan penggunaan obat kepada dokter atau apoteker, khususnya untuk anak dan remaja, alergi, kehamilan, atau penggunaan obat lain.
-            </div>
-
+            <div id="medicineResult" class="result-box hidden"></div>
+          </div>
+          <div class="notice"><strong>Catatan apotek:</strong> Informasi ini untuk edukasi, bukan resep. Periksa aturan pakai dan tanyakan kepada apoteker atau dokter sebelum menggunakan obat.</div>
         </section>
 
-        <!-- PEMERIKSAAN HARIAN -->
-        <section class="page" id="checkup">
-
-            <div class="page-heading">
-                <span>DAILY HEALTH MONITORING</span>
-                <h1>Pemeriksaan Kesehatan Harian</h1>
-                <p>Catat kebiasaan dan kondisi tubuhmu setiap hari.</p>
-            </div>
-
-            <div class="form-card">
-                <h3><i class="fa-solid fa-stethoscope"></i> Daily Health Check</h3>
-
-                <label>Bagaimana kondisi tubuhmu?</label>
-                <select id="bodyCondition">
-                    <option value="">Pilih kondisi</option>
-                    <option value="fit">Sehat dan bugar</option>
-                    <option value="normal">Biasa saja</option>
-                    <option value="tired">Lelah</option>
-                    <option value="unwell">Kurang sehat</option>
-                </select>
-
-                <label>Bagaimana suasana hatimu?</label>
-                <select id="dailyMood">
-                    <option value="">Pilih suasana hati</option>
-                    <option>Bahagia</option>
-                    <option>Tenang</option>
-                    <option>Sedih</option>
-                    <option>Cemas</option>
-                    <option>Lelah</option>
-                </select>
-
-                <label>Bagaimana tidurmu semalam?</label>
-                <select id="dailySleep">
-                    <option value="">Pilih kondisi tidur</option>
-                    <option>Nyenyak</option>
-                    <option>Biasa saja</option>
-                    <option>Kurang baik</option>
-                </select>
-
-                <label>Apakah kamu sudah makan?</label>
-                <select id="dailyFood">
-                    <option value="">Pilih jawaban</option>
-                    <option value="Sudah">Sudah</option>
-                    <option value="Belum">Belum</option>
-                </select>
-
-                <label>Apakah kamu sudah cukup minum?</label>
-                <select id="dailyWater">
-                    <option value="">Pilih jawaban</option>
-                    <option value="Sudah">Sudah</option>
-                    <option value="Belum">Belum</option>
-                </select>
-
-                <button class="primary-btn" id="dailyButton">
-                    Lihat Hasil Pemeriksaan
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-
-                <div class="result-box hidden" id="dailyResult" aria-live="polite"></div>
-            </div>
-
+        <!-- PEMERIKSAAN -->
+        <section id="checkup" class="page">
+          <div class="page-heading">
+            <span class="eyebrow">📋 DAILY HEALTH MONITORING</span>
+            <h1>Pemeriksaan Harian</h1>
+            <p>Catat kondisi kesehatan dan kebiasaanmu hari ini.</p>
+          </div>
+          <div class="form-card">
+            <div class="card-heading"><span class="heading-icon blue-icon">🩻</span><div><h2>Catatan Kesehatan</h2><p>Isi sesuai kondisi yang kamu alami.</p></div></div>
+            <label for="bodyCondition">Kondisi tubuh</label>
+            <select id="bodyCondition"><option value="">Pilih kondisi tubuh</option><option>Sehat dan bugar</option><option>Kurang bertenaga</option><option>Kurang nyaman</option><option>Sedang sakit</option></select>
+            <label for="dailyMood">Suasana hati</label>
+            <select id="dailyMood"><option value="">Pilih suasana hati</option><option>Bahagia</option><option>Tenang</option><option>Sedih</option><option>Cemas</option><option>Lelah</option></select>
+            <label for="dailySleep">Kualitas tidur</label>
+            <select id="dailySleep"><option value="">Pilih kualitas tidur</option><option>Baik</option><option>Cukup</option><option>Kurang</option></select>
+            <label for="dailyFood">Pola makan</label>
+            <select id="dailyFood"><option value="">Pilih pola makan</option><option>Teratur</option><option>Kurang teratur</option><option>Belum makan dengan cukup</option></select>
+            <label for="dailyWater">Konsumsi air putih</label>
+            <select id="dailyWater"><option value="">Pilih konsumsi air</option><option>Cukup</option><option>Kurang</option><option>Belum mencukupi</option></select>
+            <button id="dailyButton" class="primary-btn">Simpan Pemeriksaan <i class="fa-solid fa-check"></i></button>
+            <div id="dailyResult" class="result-box hidden"></div>
+          </div>
         </section>
 
         <!-- DIARY -->
-        <section class="page" id="diary">
-
-            <div class="page-heading">
-                <span>PERSONAL PATIENT JOURNAL</span>
-                <h1>Diary Pasien</h1>
-                <p>Ruang pribadi untuk menuliskan cerita, perasaan, dan pengalaman harian.</p>
+        <section id="diary" class="page">
+          <div class="page-heading">
+            <span class="eyebrow">📔 PERSONAL PATIENT JOURNAL</span>
+            <h1>Diary Pasien</h1>
+            <p>Ruang pribadi untuk menyimpan cerita, pengalaman, dan perasaanmu.</p>
+          </div>
+          <div class="diary-layout">
+            <div class="form-card diary-form">
+              <div class="card-heading"><span class="heading-icon pink-icon">🌸</span><div><h2>Dear Diary...</h2><p>Hari ini ingin bercerita tentang apa?</p></div></div>
+              <label for="diaryTitle">Judul cerita</label>
+              <input id="diaryTitle" type="text" placeholder="Contoh: Hari yang menyenangkan">
+              <label for="diaryDate">Tanggal</label>
+              <input id="diaryDate" type="date">
+              <label for="diaryMood">Suasana hati</label>
+              <select id="diaryMood"><option value="">Pilih suasana hati</option><option>🌸 Bahagia</option><option>🌿 Tenang</option><option>🌧️ Sedih</option><option>☁️ Cemas</option><option>💤 Lelah</option></select>
+              <label for="diaryContent">Ceritakan harimu</label>
+              <textarea id="diaryContent" rows="7" placeholder="Tuliskan apa yang kamu rasakan. Tidak perlu terburu-buru..."></textarea>
+              <button id="saveDiaryButton" class="primary-btn full-btn"><i class="fa-solid fa-bookmark"></i> Simpan Cerita</button>
             </div>
-
-            <div class="doctor-banner psychology-banner">
-                <div class="doctor-symbol">🌷</div>
-                <div>
-                    <h2>Your Little Safe Space</h2>
-                    <p>Tidak perlu menyusun kata dengan sempurna. Tuliskan apa yang ingin kamu ceritakan.</p>
-                </div>
+            <div class="diary-side">
+              <div class="diary-decoration">🌷</div>
+              <h3>A safe place for your thoughts.</h3>
+              <p>Setiap cerita punya makna. Kamu bisa membaca kembali catatan yang telah disimpan.</p>
+              <div class="diary-counter"><strong id="diaryCount">0</strong><span>Cerita tersimpan</span></div>
             </div>
-
-            <div class="form-card">
-                <h3><i class="fa-solid fa-book-open"></i> Tulis Ceritamu</h3>
-
-                <label>Judul cerita</label>
-                <input type="text" id="diaryTitle" placeholder="Contoh: Hari yang menyenangkan">
-
-                <label>Tanggal</label>
-                <input type="date" id="diaryDate">
-
-                <label>Bagaimana perasaanmu?</label>
-                <select id="diaryMood">
-                    <option>Bahagia</option>
-                    <option>Tenang</option>
-                    <option>Sedih</option>
-                    <option>Cemas</option>
-                    <option>Marah</option>
-                    <option>Lelah</option>
-                    <option>Bingung</option>
-                </select>
-
-                <label>Ceritakan harimu</label>
-                <textarea id="diaryContent" rows="7" placeholder="Hari ini aku merasa..."></textarea>
-
-                <button class="primary-btn" id="saveDiaryButton">
-                    Simpan Diary <i class="fa-solid fa-heart"></i>
-                </button>
-            </div>
-
-            <div class="section-heading">
-                <div>
-                    <span class="section-caption">YOUR MEMORIES</span>
-                    <h2>Catatan Pribadi</h2>
-                </div>
-                <span class="section-flower">❀</span>
-            </div>
-
-            <div class="history-list" id="diaryList"></div>
-
+          </div>
+          <div class="section-title"><div><span class="eyebrow">YOUR MEMORIES</span><h2>Cerita Tersimpan</h2></div></div>
+          <div id="diaryList" class="diary-list"></div>
         </section>
 
         <!-- RIWAYAT -->
-        <section class="page" id="history">
-
-            <div class="page-heading">
-                <span>PATIENT RECORDS</span>
-                <h1>Riwayat Pemeriksaan</h1>
-                <p>Daftar aktivitas pemeriksaan yang pernah kamu lakukan pada website ini.</p>
-            </div>
-
-            <div class="history-list" id="historyList"></div>
-
+        <section id="history" class="page">
+          <div class="page-heading"><span class="eyebrow">🕰️ PATIENT RECORDS</span><h1>Riwayat Aktivitas</h1><p>Catatan pemeriksaan dan diary yang tersimpan di perangkat ini.</p></div>
+          <div id="historyList" class="history-list"></div>
         </section>
 
         <!-- TENTANG -->
-        <section class="page" id="about">
-
-            <div class="about-card">
-                <div class="about-logo">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                </div>
-
-                <span class="section-caption">ABOUT OUR PLATFORM</span>
-                <h1>Berry Matcha Health Clinic</h1>
-
-                <p>
-                    Berry Matcha merupakan website edukasi kesehatan
-                    yang dirancang untuk membantu pengguna mengenali
-                    informasi kesehatan tubuh, kesehatan mental,
-                    informasi obat, dan kebiasaan hidup sehari-hari.
-                </p>
-
-                <div class="about-details">
-                    <div><b>Nama Website</b><span>Berry Matcha</span></div>
-                    <div><b>Kategori</b><span>Health & Wellness</span></div>
-                    <div><b>Platform</b><span>Website Responsive</span></div>
-                    <div><b>Penyimpanan</b><span>LocalStorage</span></div>
-                    <div><b>Database</b><span>Tidak menggunakan</span></div>
-                </div>
-
-                <div class="safety-note">
-                    Website ini merupakan proyek edukasi, bukan fasilitas
-                    kesehatan resmi. Tidak menyediakan diagnosis,
-                    resep, atau konsultasi dokter sungguhan.
-                </div>
-            </div>
-
+        <section id="about" class="page">
+          <div class="page-heading"><span class="eyebrow">🌸 ABOUT THIS PROJECT</span><h1>Berry Matcha Medical Clinic</h1><p>A little care for a healthier you.</p></div>
+          <div class="about-card">
+            <div class="about-logo">🌸</div>
+            <h2>Care for your body, care for your mind.</h2>
+            <p>Berry Matcha Medical Clinic merupakan proyek website edukasi kesehatan yang menyediakan informasi umum mengenai kesehatan tubuh, psikologi, psikiatri, obat-obatan, pemeriksaan harian, dan diary digital.</p>
+            <p>Website ini dikembangkan menggunakan HTML, CSS, dan JavaScript tanpa database. Catatan pribadi disimpan pada penyimpanan lokal browser.</p>
+            <div class="tech-list"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive Design</span></div>
+            <div class="notice">Website ini merupakan media edukasi dan bukan pengganti pemeriksaan, diagnosis, atau konsultasi langsung dengan dokter maupun tenaga kesehatan profesional.</div>
+          </div>
         </section>
 
         <footer class="footer">
-            <span>✿</span>
-            Berry Matcha Health Clinic
-            <small>Care for your body, kindness for your mind.</small>
-            <small>© 2026 Berry Matcha. Educational Project.</small>
+          <strong>🌸 Berry Matcha Medical Clinic</strong>
+          <span>Made with care · 2026</span>
         </footer>
-
-    </main>
-
-</div>
-
+      </main>
+    </div>
+  </div>
 </body>
 </html>
