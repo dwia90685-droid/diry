@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berry Matcha | Mental Health Diary</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="intro" class="intro">
+    <div class="intro-flower">🌸</div>
+    <h1>Berry Matcha</h1>
+    <p>Your Mind Deserves Gentle Care</p>
+    <button onclick="enterApp()">Enter Your Diary ✿</button>
+</div>
+
+<div id="app" class="app hidden">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <span>🌸</span>
+            <div>
+                <h2>Berry Matcha</h2>
+                <small>Mental Health Journal</small>
+            </div>
+        </div>
+
+        <p class="nav-title">MAIN MENU</p>
+
+        <button class="nav active" onclick="showPage('home',this)">⌂ Dashboard</button>
+        <button class="nav" onclick="showPage('diary',this)">♡ My Diary</button>
+        <button class="nav" onclick="showPage('psychology',this)">🧠 Psychology</button>
+        <button class="nav" onclick="showPage('psychiatry',this)">✚ Psychiatry</button>
+        <button class="nav" onclick="showPage('medical',this)">⚕ Medical Notes</button>
+        <button class="nav" onclick="showPage('about',this)">✿ About</button>
+
+        <div class="sidebar-bottom">
+            <span>🌿</span>
+            <p>Take a breath.<br>Give yourself time.</p>
+        </div>
+    </aside>
+
+    <main class="content">
+
+        <header>
+            <div>
+                <small>MENTAL HEALTH & WELLNESS</small>
+                <h2>Good day, beautiful soul 🌷</h2>
+            </div>
+            <div class="profile">DA</div>
+        </header>
+
+        <section id="home" class="page">
+            <div class="welcome">
+                <div>
+                    <span class="tag">YOUR PERSONAL JOURNAL</span>
+                    <h1>A safe space for<br>your mind and heart.</h1>
+                    <p>Setiap perasaan layak didengar. Mulailah dengan memahami dirimu sendiri.</p>
+                    <button onclick="showPage('diary')">Write Your Story ↗</button>
+                </div>
+                <div class="welcome-flower">🌷</div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span>📖</span>
+                    <p>Total Diary</p>
+                    <h2 id="totalDiary">0</h2>
+                </div>
+                <div class="stat">
+                    <span>🌱</span>
+                    <p>Personal Growth</p>
+                    <h2>Keep Growing</h2>
+                </div>
+                <div class="stat">
+                    <span>♡</span>
+                    <p>Today's Reminder</p>
+                    <h2>Be Kind to You</h2>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h2>Daily Reflection</h2>
+                <span>✿</span>
+            </div>
+
+            <div class="quote">
+                "Merawat kesehatan mental dimulai dengan berani mengenali dan memahami perasaan diri sendiri."
+            </div>
+        </section>
+
+        <section id="diary" class="page hidden">
+            <div class="page-heading">
+                <span>PERSONAL JOURNAL</span>
+                <h1>My Little Diary ♡</h1>
+                <p>Tempat untuk menuangkan pikiran, pengalaman, dan perasaanmu.</p>
+            </div>
+
+            <div class="diary-card">
+                <label>Judul cerita</label>
+                <input id="diaryTitle" placeholder="Apa yang ingin kamu ceritakan?">
+
+                <label>Bagaimana perasaanmu hari ini?</label>
+                <select id="mood">
+                    <option>Bahagia 🌸</option>
+                    <option>Tenang 🌿</option>
+                    <option>Sedih 🌧️</option>
+                    <option>Cemas ☁️</option>
+                    <option>Lelah 💤</option>
+                    <option>Bersyukur ♡</option>
+                </select>
+
+                <label>Tanggal</label>
+                <input type="date" id="diaryDate">
+
+                <label>Ceritakan isi pikiranmu</label>
+                <textarea id="diaryContent" rows="7" placeholder="Tuliskan apa pun yang sedang kamu rasakan. Tidak perlu takut untuk jujur pada diri sendiri..."></textarea>
+
+                <button onclick="saveDiary()">Save My Diary ✿</button>
+            </div>
+
+            <h2 class="saved-heading">My Memories</h2>
+            <div id="diaryList" class="diary-list"></div>
+        </section>
+
+        <section id="psychology" class="page hidden">
+            <div class="page-heading">
+                <span>PSYCHOLOGY DEPARTMENT</span>
+                <h1>Understanding Your Mind 🧠</h1>
+                <p>Mengenal pikiran, emosi, perilaku, dan perkembangan diri.</p>
+            </div>
+
+            <div class="info-grid">
+                <article>
+                    <span>♡</span>
+                    <h3>Emotional Awareness</h3>
+                    <p>Mengenali dan memahami berbagai emosi yang muncul dalam kehidupan sehari-hari.</p>
+                </article>
+                <article>
+                    <span>🌿</span>
+                    <h3>Self Awareness</h3>
+                    <p>Belajar memahami kebutuhan, nilai, kekuatan, dan batasan diri sendiri.</p>
+                </article>
+                <article>
+                    <span>🧩</span>
+                    <h3>Human Behavior</h3>
+                    <p>Mempelajari hubungan antara pikiran, perasaan, dan perilaku manusia.</p>
+                </article>
+                <article>
+                    <span>🌷</span>
+                    <h3>Self Reflection</h3>
+                    <p>Mengevaluasi pengalaman untuk mendapatkan pemahaman dan pembelajaran baru.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="psychiatry" class="page hidden">
+            <div class="page-heading">
+                <span>PSYCHIATRY DEPARTMENT</span>
+                <h1>Mental Health Education ✚</h1>
+                <p>Mengenal kesehatan mental dan peran profesional kesehatan.</p>
+            </div>
+
+            <div class="medical-card">
+                <h2>What is Psychiatry?</h2>
+                <p>Psikiatri merupakan bidang kedokteran yang berfokus pada kesehatan mental, termasuk penilaian, diagnosis, pencegahan, dan penanganan gangguan mental oleh dokter spesialis kejiwaan.</p>
+            </div>
+
+            <div class="info-grid">
+                <article>
+                    <span>🩺</span>
+                    <h3>Psychiatrist</h3>
+                    <p>Dokter spesialis yang memiliki keahlian dalam bidang kesehatan jiwa.</p>
+                </article>
+                <article>
+                    <span>🧠</span>
+                    <h3>Mental Wellness</h3>
+                    <p>Memahami pentingnya kesehatan mental dalam kehidupan sehari-hari.</p>
+                </article>
+            </div>
+
+            <p class="notice">Informasi edukasi ini bukan diagnosis atau pengganti konsultasi dengan tenaga kesehatan profesional.</p>
+        </section>
+
+        <section id="medical" class="page hidden">
+            <div class="page-heading">
+                <span>MEDICAL RECORD</span>
+                <h1>My Health Notes ⚕</h1>
+                <p>Catatan pribadi untuk membantu mengingat informasi kesehatan.</p>
+            </div>
+
+            <div class="diary-card">
+                <label>Nama catatan</label>
+                <input id="healthTitle" placeholder="Contoh: Catatan konsultasi">
+
+                <label>Isi catatan</label>
+                <textarea id="healthContent" rows="6" placeholder="Tuliskan catatan kesehatan atau pertanyaan untuk tenaga kesehatan..."></textarea>
+
+                <button onclick="saveHealth()">Save Health Note</button>
+            </div>
+
+            <div id="healthList" class="diary-list"></div>
+        </section>
+
+        <section id="about" class="page hidden">
+            <div class="about-card">
+                <div class="about-flower">🌸</div>
+                <h1>Berry Matcha Diary</h1>
+                <p>Personal Mental Health & Self Reflection Journal</p>
+                <div class="about-line"></div>
+                <h3>About This Project</h3>
+                <p>Website ini dibuat sebagai ruang digital pribadi untuk menulis diary, mengenal psikologi, mempelajari edukasi psikiatri, serta menyimpan catatan kesehatan.</p>
+                <p><b>Created by:</b> Dwi Astuti</p>
+                <p><b>Class:</b> XI RPL</p>
+                <p><b>Theme:</b> Pink Blossom & Matcha Green</p>
+            </div>
+        </section>
+
+        <footer>🌸 Berry Matcha Diary · Take care of your mind.</footer>
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
