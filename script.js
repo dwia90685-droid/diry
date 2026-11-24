@@ -1,752 +1,483 @@
 
 "use strict";
 
-// ==========================================
-// BERRY MATCHA HEALTH CLINIC
-// FINAL JAVASCRIPT
-// ==========================================
-
-// HELPER
+/* ==================================
+   BERRY MATCHA MEDICAL CLINIC
+   Main JavaScript
+================================== */
 
 const $ = (id) => document.getElementById(id);
 
+const STORAGE = {
+  diary: "berryMatchaDiary",
+  checkup: "berryMatchaCheckup"
+};
+
+function readStorage(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveStorage(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
 function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-    })[char]);
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
 }
 
-function readData(key) {
-    try {
-        const value = JSON.parse(localStorage.getItem(key) || "[]");
-        return Array.isArray(value) ? value : [];
-    } catch {
-        return [];
+function showResult(id, title, message, urgent = false) {
+  const element = $(id);
+  if (!element) return;
+
+  element.classList.remove("hidden", "urgent");
+
+  if (urgent) element.classList.add("urgent");
+
+  element.innerHTML = `
+    <h3>${title}</h3>
+    <p>${message}</p>
+  `;
+
+  element.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+/* ==================================
+   INTRO & NAVIGATION
+================================== */
+
+function openClinic() {
+  $("intro").classList.add("hidden");
+  $("app").classList.remove("hidden");
+  showPage("dashboard");
+}
+
+function showPage(pageId) {
+  const target = $(pageId);
+
+  if (!target || !target.classList.contains("page")) return;
+
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  target.classList.add("active");
+
+  document.querySelectorAll(".nav").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === pageId
+    );
+  });
+
+  $("sidebar").classList.remove("open");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+  if (pageId === "diary") renderDiaries();
+  if (pageId === "history") renderHistory();
+}
+
+function initializeNavigation() {
+  $("enterButton").addEventListener("click", openClinic);
+
+  document.addEventListener("click", event => {
+    const navButton = event.target.closest("[data-page]");
+    const goButton = event.target.closest("[data-go]");
+
+    if (navButton) {
+      showPage(navButton.dataset.page);
     }
-}
 
-function saveData(key, data) {
-    try {
-        localStorage.setItem(key, JSON.stringify(data));
-        return true;
-    } catch {
-        alert("Penyimpanan browser tidak tersedia atau penuh.");
-        return false;
+    if (goButton) {
+      showPage(goButton.dataset.go);
     }
+  });
+
+  $("mobileMenu").addEventListener("click", () => {
+    $("sidebar").classList.toggle("open");
+  });
 }
 
-let diaries = readData("berryDiaries");
-let examinations = readData("berryExaminations");
+/* ==================================
+   GENERAL PRACTICE
+================================== */
 
-const pageTitles = {
-    dashboard: "Dashboard",
-    general: "Dokter Umum",
-    psychology: "Psikolog",
-    psychiatry: "Psikiater",
-    pharmacy: "Apotek",
-    checkup: "Pemeriksaan Harian",
-    diary: "Diary Pasien",
-    history: "Riwayat Pemeriksaan",
-    about: "Tentang Klinik"
+function handleGeneralConsultation() {
+  const name = $("patientName").value.trim();
+  const symptom = $("symptom").value;
+  const duration = $("duration").value.trim();
+  const severity = $("severity").value;
+  const additional = $("otherSymptoms").value.trim();
+
+  if (!name || !symptom || !duration || !severity) {
+    alert("Mohon lengkapi nama, keluhan, lama keluhan, dan tingkat keluhan.");
+    return;
+  }
+
+  const advice = {
+    "sakit kepala": "Sakit kepala dapat memiliki berbagai penyebab. Cobalah beristirahat dan cukup minum. Jika sering terjadi atau memburuk, periksakan diri.",
+    "demam": "Demam dapat terjadi ketika tubuh sedang melawan infeksi. Istirahat dan cukup cairan dapat membantu. Periksakan diri jika demam tinggi, menetap, atau disertai kondisi yang mengkhawatirkan.",
+    "batuk": "Batuk dapat disebabkan oleh berbagai kondisi. Minum cukup air dan istirahat. Jika disertai sesak napas atau memburuk, segera cari bantuan medis.",
+    "sakit perut": "Sakit perut memiliki banyak kemungkinan penyebab. Perhatikan makanan dan kondisi tubuh. Jika nyeri berat atau menetap, segera periksakan diri.",
+    "pusing": "Pusing dapat dipengaruhi berbagai faktor. Duduk atau berbaring dengan aman dan hindari aktivitas berisiko sampai membaik. Jika berat atau berulang, konsultasikan kepada dokter.",
+    "lelah": "Tubuh lelah dapat berkaitan dengan aktivitas, istirahat, atau kondisi kesehatan. Usahakan tidur cukup, makan teratur, dan periksakan diri jika terus berlanjut.",
+    "lainnya": "Keluhan ini memerlukan informasi lebih lanjut untuk dipahami. Catat perubahan yang terjadi dan konsultasikan dengan tenaga kesehatan."
+  };
+
+  const urgent = severity === "berat";
+
+  const message = `
+    <strong>Nama pasien:</strong> ${escapeHTML(name)}<br>
+    <strong>Keluhan:</strong> ${escapeHTML(symptom)}<br>
+    <strong>Lama keluhan:</strong> ${escapeHTML(duration)}<br>
+    <strong>Tingkat keluhan:</strong> ${escapeHTML(severity)}<br>
+    <strong>Keluhan tambahan:</strong> ${escapeHTML(additional || "Tidak ada keterangan")}<br><br>
+    <strong>Informasi kesehatan:</strong><br>
+    ${advice[symptom]}
+    <br><br>
+    ${urgent
+      ? "Karena keluhan kamu tergolong berat, segera minta bantuan orang dewasa tepercaya dan periksakan diri ke fasilitas kesehatan."
+      : "Informasi ini bukan diagnosis. Jika keluhan tidak membaik atau membuatmu khawatir, konsultasikan dengan dokter."
+    }
+  `;
+
+  showResult("generalResult", "🩺 Informasi Konsultasi", message, urgent);
+}
+
+/* ==================================
+   PSYCHOLOGY
+================================== */
+
+function handlePsychology() {
+  const emotion = $("emotion").value;
+  const sleep = $("sleep").value;
+  const stress = $("stress").value;
+  const thoughts = $("thoughts").value.trim();
+
+  if (!emotion || !sleep || !stress) {
+    alert("Mohon isi perasaan, kualitas tidur, dan tingkat tekanan terlebih dahulu.");
+    return;
+  }
+
+  const reflections = {
+    happy: "Senang mengetahui kamu merasa bahagia. Nikmati momen baik ini dan tetap berikan waktu untuk dirimu sendiri.",
+    calm: "Perasaan tenang adalah hal yang baik. Pertahankan kebiasaan yang membuatmu nyaman dan seimbang.",
+    sad: "Tidak apa-apa merasa sedih. Berikan waktu untuk memahami perasaanmu dan bercerita kepada orang yang kamu percaya.",
+    anxious: "Saat merasa cemas, cobalah berhenti sejenak, bernapas perlahan, dan fokus pada hal yang bisa kamu lakukan sekarang.",
+    angry: "Saat marah, beri dirimu waktu untuk menenangkan diri sebelum mengambil keputusan atau merespons keadaan.",
+    tired: "Kelelahan juga perlu diperhatikan. Kamu boleh beristirahat dan tidak harus menyelesaikan semuanya sekaligus."
+  };
+
+  let message = `
+    <strong>Refleksi perasaan:</strong><br>
+    ${reflections[emotion]}
+    <br><br>
+    <strong>Kualitas tidur:</strong> ${escapeHTML(sleep)}<br>
+    <strong>Tingkat tekanan:</strong> ${escapeHTML(stress)}<br>
+  `;
+
+  if (sleep === "kurang") {
+    message += "<br>Cobalah membuat rutinitas tidur yang teratur dan berikan tubuh waktu istirahat.";
+  }
+
+  if (stress === "tinggi") {
+    message += "<br>Tekanan yang terasa tinggi tidak harus kamu hadapi sendirian. Bicarakan dengan orang tepercaya atau tenaga profesional.";
+  }
+
+  if (thoughts) {
+    message += `<br><br><strong>Catatanmu:</strong><br>${escapeHTML(thoughts).replace(/\n/g, "<br>")}`;
+  }
+
+  message += "<br><br>Ini adalah refleksi umum, bukan hasil diagnosis psikologis.";
+
+  showResult("psychologyResult", "🌷 Refleksi Dirimu", message);
+}
+
+/* ==================================
+   PHARMACY
+================================== */
+
+const medicineInformation = {
+  paracetamol: {
+    title: "Paracetamol",
+    description: "Paracetamol merupakan obat yang digunakan untuk membantu meredakan nyeri dan menurunkan demam.",
+    note: "Perhatikan aturan pakai pada kemasan. Jangan menggabungkan beberapa obat yang sama-sama mengandung paracetamol tanpa saran tenaga kesehatan."
+  },
+
+  oralit: {
+    title: "Oralit",
+    description: "Oralit merupakan larutan yang mengandung garam dan gula untuk membantu mengganti cairan serta elektrolit yang hilang, misalnya saat diare.",
+    note: "Larutkan sesuai petunjuk kemasan. Jika mengalami tanda dehidrasi berat, segera cari pertolongan medis."
+  },
+
+  antasida: {
+    title: "Antasida",
+    description: "Antasida merupakan obat yang membantu menetralkan asam lambung dan meredakan keluhan tertentu akibat asam lambung.",
+    note: "Ikuti petunjuk kemasan dan tanyakan kepada apoteker jika sedang menggunakan obat lain."
+  },
+
+  "obat batuk": {
+    title: "Obat Batuk",
+    description: "Obat batuk memiliki jenis dan kegunaan yang berbeda, tergantung penyebab serta jenis batuk.",
+    note: "Tidak semua obat batuk cocok untuk setiap orang. Konsultasikan dengan apoteker atau dokter sebelum menggunakannya."
+  }
 };
 
-// ==========================================
-// INTRO
-// ==========================================
+function initializePharmacy() {
+  document.querySelectorAll("[data-medicine]").forEach(button => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.medicine;
+      const medicine = medicineInformation[key];
 
-function enterClinic() {
-    $("intro").classList.add("hidden");
-    $("app").classList.remove("hidden");
+      if (!medicine) return;
 
-    navigate("dashboard");
-}
-
-// ==========================================
-// NAVIGATION
-// ==========================================
-
-function navigate(page) {
-
-    const target = $(page);
-
-    if (!target || !target.classList.contains("page")) {
-        return;
-    }
-
-    document.querySelectorAll(".page").forEach(section => {
-        section.classList.remove("active");
+      showResult(
+        "medicineResult",
+        `💊 ${medicine.title}`,
+        `${medicine.description}<br><br><strong>Perhatian:</strong> ${medicine.note}`
+      );
     });
+  });
 
-    target.classList.add("active");
-
-    document.querySelectorAll(".nav").forEach(button => {
-        button.classList.toggle(
-            "active",
-            button.dataset.page === page
-        );
-    });
-
-    $("pageTitle").textContent = pageTitles[page] || "Berry Matcha";
-
-    if (page === "diary") renderDiaries();
-    if (page === "history") renderHistory();
-    if (page === "dashboard") updateDashboard();
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-// ==========================================
-// RESULT DISPLAY
-// ==========================================
-
-function showResult(id, title, label, messages, urgent = false) {
-
-    const box = $(id);
-
-    box.classList.remove("hidden", "urgent");
-
-    if (urgent) {
-        box.classList.add("urgent");
-    }
-
-    box.innerHTML = `
-        <span class="result-label">${escapeHTML(label)}</span>
-        <h3>${escapeHTML(title)}</h3>
-
-        ${messages.map(message => `
-            <p>${escapeHTML(message)}</p>
-        `).join("")}
-    `;
-
-    box.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-}
-
-// ==========================================
-// EXAMINATION HISTORY
-// ==========================================
-
-function addExamination(department, description) {
-
-    const record = {
-        id: Date.now(),
-        department,
-        description,
-        date: new Date().toLocaleString("id-ID")
-    };
-
-    const updated = [record, ...examinations];
-
-    if (!saveData("berryExaminations", updated)) {
-        return;
-    }
-
-    examinations = updated;
-    updateDashboard();
-    renderHistory();
-}
-
-function renderHistory() {
-
-    const list = $("historyList");
-
-    if (!examinations.length) {
-        list.innerHTML = `
-            <div class="info-panel">
-                <h3>🌸 Belum ada riwayat</h3>
-                <p>Riwayat pemeriksaan akan muncul setelah kamu mengisi pemeriksaan.</p>
-            </div>
-        `;
-        return;
-    }
-
-    list.innerHTML = examinations.map(item => `
-        <article class="history-item">
-            <h3>${escapeHTML(item.department)}</h3>
-            <small>${escapeHTML(item.date)}</small>
-            <p>${escapeHTML(item.description)}</p>
-        </article>
-    `).join("");
-}
-
-function updateDashboard() {
-
-    $("checkupCount").textContent = examinations.length;
-    $("diaryCount").textContent = diaries.length;
-}
-
-// ==========================================
-// DOKTER UMUM
-// ==========================================
-
-const symptomData = {
-
-    headache: {
-        title: "Sakit Kepala",
-        advice: [
-            "Beristirahatlah di tempat yang nyaman.",
-            "Minum air putih secukupnya.",
-            "Kurangi aktivitas yang membuat keluhan semakin berat.",
-            "Jika sakit kepala berat, mendadak, berulang, atau disertai gangguan penglihatan maupun kelemahan tubuh, segera cari pertolongan medis."
-        ]
-    },
-
-    fever: {
-        title: "Demam",
-        advice: [
-            "Istirahat dan cukupi kebutuhan cairan.",
-            "Pantau suhu tubuh menggunakan termometer.",
-            "Gunakan pakaian yang nyaman.",
-            "Jika demam menetap, memburuk, atau disertai tanda bahaya, periksakan diri ke dokter."
-        ]
-    },
-
-    cough: {
-        title: "Batuk atau Pilek",
-        advice: [
-            "Istirahat dengan cukup.",
-            "Minum cairan secara teratur.",
-            "Hindari asap rokok dan debu.",
-            "Jika mengalami sesak napas atau kondisi semakin buruk, segera cari pertolongan medis."
-        ]
-    },
-
-    stomach: {
-        title: "Sakit Perut",
-        advice: [
-            "Perhatikan makanan dan minuman yang dikonsumsi.",
-            "Istirahat dan cukup minum.",
-            "Catat lokasi dan waktu munculnya nyeri.",
-            "Jika nyeri berat, muntah terus-menerus, atau terdapat darah dalam tinja, segera periksa."
-        ]
-    },
-
-    dizzy: {
-        title: "Pusing",
-        advice: [
-            "Duduk atau berbaring di tempat aman.",
-            "Hindari mengemudi atau aktivitas berisiko saat pusing.",
-            "Minum air jika mampu.",
-            "Jika pusing disertai pingsan, kelemahan anggota tubuh, atau kesulitan bicara, segera cari bantuan medis."
-        ]
-    },
-
-    fatigue: {
-        title: "Badan Lemas",
-        advice: [
-            "Berikan waktu tubuh untuk beristirahat.",
-            "Makan secara teratur.",
-            "Cukupi kebutuhan cairan.",
-            "Jika lemas berlanjut atau semakin berat, periksakan diri ke tenaga kesehatan."
-        ]
-    },
-
-    other: {
-        title: "Keluhan Kesehatan Lainnya",
-        advice: [
-            "Catat gejala yang dirasakan.",
-            "Perhatikan kapan keluhan mulai muncul.",
-            "Hindari aktivitas yang memperburuk keadaan.",
-            "Konsultasikan keluhan kepada tenaga kesehatan untuk penilaian lebih lanjut."
-        ]
-    }
-};
-
-function checkGeneral() {
-
-    const name = $("patientName").value.trim();
-    const symptom = $("symptom").value;
-    const duration = $("duration").value;
-    const severity = $("severity").value;
-    const additional = $("otherSymptoms").value.trim();
-
-    if (!name || !symptom || !duration || !severity) {
-        alert("Mohon lengkapi seluruh data pemeriksaan.");
-        return;
-    }
-
-    const selected = symptomData[symptom];
-
-    let messages = [
-        `Halo ${name}, berikut informasi mengenai keluhan ${selected.title.toLowerCase()}.`,
-        ...selected.advice,
-        `Durasi keluhan yang dilaporkan: ${duration}.`
-    ];
-
-    if (additional) {
-        messages.push("Gejala tambahan: " + additional);
-    }
-
-    let label = "INFORMASI KESEHATAN";
-    let urgent = false;
-
-    if (severity === "mild") {
-        label = "KELUHAN DILAPORKAN RINGAN";
-        messages.push(
-            "Pantau kondisi tubuh dan periksakan diri jika tidak membaik."
-        );
-    }
-
-    if (severity === "moderate") {
-        label = "PERLU DIPERHATIKAN";
-        messages.push(
-            "Sebaiknya mintalah bantuan orang dewasa dan pertimbangkan pemeriksaan langsung oleh dokter."
-        );
-    }
-
-    if (severity === "severe") {
-        label = "PERLU PENILAIAN MEDIS SEGERA";
-        urgent = true;
-        messages.push(
-            "Jangan mengandalkan perawatan mandiri saja. Segera minta bantuan orang dewasa dan datangi fasilitas kesehatan. Jika mengalami gejala darurat, pergi ke IGD."
-        );
-    }
-
-    messages.push(
-        "Hasil ini bukan diagnosis dan tidak menentukan penyebab penyakit."
-    );
-
-    showResult(
-        "generalResult",
-        selected.title,
-        label,
-        messages,
-        urgent
-    );
-
-    addExamination("Dokter Umum", selected.title);
-}
-
-// ==========================================
-// PSIKOLOGI
-// ==========================================
-
-const emotionData = {
-
-    happy: "Kamu melaporkan perasaan bahagia. Nikmati hal-hal positif dan tetap berikan perhatian pada kebutuhan dirimu.",
-
-    calm: "Perasaan tenang dapat menjadi kesempatan untuk mengenali tujuan dan kebutuhan pribadi.",
-
-    sad: "Tidak apa-apa jika sedang merasa sedih. Berikan dirimu waktu dan cobalah berbicara dengan orang yang kamu percaya.",
-
-    anxious: "Saat merasa cemas, cobalah berhenti sejenak, bernapas perlahan, dan fokus pada hal yang bisa dilakukan saat ini.",
-
-    angry: "Ketika marah, ambil jeda sebelum merespons sesuatu. Cobalah mengenali situasi yang memicu perasaan tersebut.",
-
-    tired: "Kelelahan emosional dapat membuat aktivitas terasa berat. Berikan waktu untuk beristirahat dan mencari dukungan."
-};
-
-function checkPsychology() {
-
-    const emotion = $("emotion").value;
-    const sleep = $("sleep").value;
-    const stress = $("stress").value;
-    const thoughts = $("thoughts").value.trim();
-
-    if (!emotion || !sleep || !stress) {
-        alert("Lengkapi formulir refleksi emosional terlebih dahulu.");
-        return;
-    }
-
-    let messages = [emotionData[emotion]];
-
-    if (sleep === "good") {
-        messages.push(
-            "Kamu melaporkan tidur yang nyenyak. Pertahankan kebiasaan istirahat yang nyaman."
-        );
-    }
-
-    if (sleep === "average") {
-        messages.push(
-            "Perhatikan kembali jadwal tidur dan usahakan memiliki waktu istirahat yang cukup."
-        );
-    }
-
-    if (sleep === "poor") {
-        messages.push(
-            "Jika kesulitan tidur terus berlangsung, pertimbangkan berkonsultasi dengan tenaga profesional."
-        );
-    }
-
-    if (stress === "no") {
-        messages.push(
-            "Tetap luangkan waktu untuk kegiatan yang membuatmu nyaman."
-        );
-    }
-
-    if (stress === "sometimes") {
-        messages.push(
-            "Kenali situasi yang membuatmu terbebani dan cari cara sehat untuk menghadapinya."
-        );
-    }
-
-    if (stress === "often") {
-        messages.push(
-            "Jika tekanan sering dirasakan, cobalah berbicara kepada orang tepercaya atau psikolog."
-        );
-    }
-
-    if (thoughts) {
-        messages.push(
-            "Kamu sudah menuliskan hal yang sedang dipikirkan. Kamu bisa menyimpannya dalam diary untuk refleksi pribadi."
-        );
-    }
-
-    messages.push(
-        "Refleksi ini bukan diagnosis, bukan tes psikologi klinis, dan bukan pengganti konsultasi profesional."
-    );
-
-    showResult(
-        "psychologyResult",
-        "Emotional Wellness Reflection",
-        "REFLEKSI PERASAAN",
-        messages
-    );
-
-    addExamination(
-        "Psikologi",
-        "Refleksi kondisi emosional"
-    );
-}
-
-// ==========================================
-// PEMERIKSAAN HARIAN
-// ==========================================
-
-function dailyCheckup() {
-
-    const body = $("bodyCondition").value;
-    const mood = $("dailyMood").value;
-    const sleep = $("dailySleep").value;
-    const food = $("dailyFood").value;
-    const water = $("dailyWater").value;
-
-    if (!body || !mood || !sleep || !food || !water) {
-        alert("Mohon lengkapi semua bagian pemeriksaan harian.");
-        return;
-    }
-
-    let messages = [];
-
-    const bodyMessages = {
-        fit: "Kamu melaporkan kondisi tubuh yang bugar. Pertahankan kebiasaan sehat.",
-        normal: "Perhatikan kebutuhan tubuh dan jaga pola hidup seimbang.",
-        tired: "Kamu merasa lelah. Berikan tubuh waktu untuk beristirahat.",
-        unwell: "Kamu sedang merasa kurang sehat. Perhatikan gejala dan mintalah bantuan jika diperlukan."
-    };
-
-    messages.push(bodyMessages[body]);
-    messages.push("Suasana hati hari ini: " + mood + ".");
-
-    messages.push(
-        sleep === "Nyenyak"
-            ? "Kamu melaporkan tidur yang nyenyak."
-            : "Perhatikan kualitas tidur dan usahakan jadwal tidur yang teratur."
-    );
-
-    messages.push(
-        food === "Sudah"
-            ? "Kamu sudah makan. Pertahankan kebiasaan makan teratur."
-            : "Usahakan tidak melewatkan waktu makan."
-    );
-
-    messages.push(
-        water === "Sudah"
-            ? "Kamu sudah memperhatikan kebutuhan cairan."
-            : "Cobalah minum air secara bertahap sepanjang hari."
-    );
-
-    messages.push(
-        "Ini merupakan catatan kebiasaan harian, bukan pemeriksaan medis atau diagnosis."
-    );
-
-    showResult(
-        "dailyResult",
-        "Daily Health Summary",
-        "LAPORAN KESEHATAN HARIAN",
-        messages
-    );
-
-    addExamination(
-        "Pemeriksaan Harian",
-        "Catatan kondisi tubuh, suasana hati, tidur, makan, dan minum."
-    );
-}
-
-// ==========================================
-// INFORMASI OBAT
-// ==========================================
-
-const medicineData = {
-
-    paracetamol: {
-        title: "Paracetamol",
-        category: "Pereda nyeri dan demam",
-        description: "Digunakan untuk meredakan nyeri dan menurunkan demam.",
-        use: "Ikuti petunjuk kemasan atau arahan dokter dan apoteker. Pastikan tidak mengonsumsi beberapa produk dengan kandungan paracetamol secara bersamaan tanpa arahan profesional.",
-        warning: "Penggunaan berlebihan dapat menyebabkan kerusakan hati."
-    },
-
-    oralit: {
-        title: "Oralit",
-        category: "Larutan rehidrasi oral",
-        description: "Membantu mengganti cairan dan elektrolit yang hilang akibat diare.",
-        use: "Larutkan sesuai petunjuk kemasan menggunakan jumlah air yang telah ditentukan.",
-        warning: "Segera periksa jika diare disertai darah, dehidrasi, atau muntah terus-menerus."
-    },
-
-    antasida: {
-        title: "Antasida",
-        category: "Obat penetral asam lambung",
-        description: "Membantu menetralkan asam lambung pada keluhan tertentu.",
-        use: "Ikuti petunjuk produk dan tanyakan kepada apoteker mengenai waktu penggunaan serta interaksi dengan obat lain.",
-        warning: "Tidak semua sakit perut disebabkan oleh asam lambung."
-    },
-
-    batuk: {
-        title: "Obat Batuk",
-        category: "Informasi obat batuk",
-        description: "Obat batuk memiliki jenis berbeda berdasarkan batuk kering atau berdahak.",
-        use: "Pemilihan obat sebaiknya dibantu dokter atau apoteker berdasarkan usia dan kondisi pengguna.",
-        warning: "Periksa kandungan obat agar tidak menggabungkan bahan aktif yang sama."
-    }
-};
-
-function medicineDetail(id) {
-
-    const medicine = medicineData[id];
-
-    if (!medicine) return;
-
-    const box = $("medicineResult");
-
-    box.classList.remove("hidden", "urgent");
-
-    box.innerHTML = `
-        <span class="result-label">MEDICINE INFORMATION</span>
-
-        <h3>${escapeHTML(medicine.title)}</h3>
-
-        <p><b>Kategori:</b> ${escapeHTML(medicine.category)}</p>
-
-        <p><b>Kegunaan:</b> ${escapeHTML(medicine.description)}</p>
-
-        <p><b>Petunjuk:</b> ${escapeHTML(medicine.use)}</p>
-
-        <p><b>Perhatian:</b> ${escapeHTML(medicine.warning)}</p>
-
-        <p>Informasi ini bersifat edukatif. Konsultasikan penggunaan obat kepada dokter atau apoteker.</p>
-    `;
-
-    box.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-}
-
-function searchMedicine() {
-
-    const keyword = $("medicineSearch").value
-        .toLowerCase()
-        .trim();
+  $("medicineSearch").addEventListener("input", event => {
+    const keyword = event.target.value.toLowerCase();
 
     document.querySelectorAll(".medicine-card").forEach(card => {
+      const searchable = (
+        card.dataset.search + " " + card.innerText
+      ).toLowerCase();
 
-        const content = card.dataset.search.toLowerCase();
-
-        card.style.display =
-            content.includes(keyword) ? "" : "none";
+      card.style.display = searchable.includes(keyword)
+        ? ""
+        : "none";
     });
+  });
 }
 
-// ==========================================
-// DIARY PASIEN
-// ==========================================
+/* ==================================
+   DAILY CHECKUP
+================================== */
 
-function saveDiary() {
+function handleDailyCheckup() {
+  const body = $("bodyCondition").value;
+  const mood = $("dailyMood").value;
+  const sleep = $("dailySleep").value;
+  const food = $("dailyFood").value;
+  const water = $("dailyWater").value;
 
-    const title = $("diaryTitle").value.trim();
-    const date = $("diaryDate").value;
-    const mood = $("diaryMood").value;
-    const content = $("diaryContent").value.trim();
+  if (!body || !mood || !sleep || !food || !water) {
+    alert("Mohon lengkapi semua bagian pemeriksaan harian.");
+    return;
+  }
 
-    if (!title || !date || !content) {
-        alert("Lengkapi judul, tanggal, dan isi diary.");
-        return;
-    }
+  const record = {
+    id: Date.now(),
+    date: new Date().toLocaleDateString("id-ID"),
+    body,
+    mood,
+    sleep,
+    food,
+    water
+  };
 
-    const entry = {
-        id: Date.now(),
-        title,
-        date,
-        mood,
-        content
-    };
+  const records = readStorage(STORAGE.checkup);
+  records.unshift(record);
+  saveStorage(STORAGE.checkup, records);
 
-    const updated = [entry, ...diaries];
+  showResult(
+    "dailyResult",
+    "🌿 Pemeriksaan Berhasil Disimpan",
+    `
+      <strong>Kondisi tubuh:</strong> ${escapeHTML(body)}<br>
+      <strong>Suasana hati:</strong> ${escapeHTML(mood)}<br>
+      <strong>Tidur:</strong> ${escapeHTML(sleep)}<br>
+      <strong>Pola makan:</strong> ${escapeHTML(food)}<br>
+      <strong>Air putih:</strong> ${escapeHTML(water)}<br><br>
+      Terima kasih sudah memperhatikan kesehatanmu hari ini.
+    `
+  );
+}
 
-    if (!saveData("berryDiaries", updated)) {
-        return;
-    }
+/* ==================================
+   DIARY
+================================== */
 
-    diaries = updated;
+function handleSaveDiary() {
+  const title = $("diaryTitle").value.trim();
+  const date = $("diaryDate").value;
+  const mood = $("diaryMood").value;
+  const content = $("diaryContent").value.trim();
 
-    $("diaryTitle").value = "";
-    $("diaryContent").value = "";
+  if (!title || !date || !mood || !content) {
+    alert("Mohon lengkapi judul, tanggal, suasana hati, dan cerita.");
+    return;
+  }
 
-    renderDiaries();
-    updateDashboard();
+  const diary = {
+    id: Date.now(),
+    title,
+    date,
+    mood,
+    content,
+    createdAt: new Date().toISOString()
+  };
 
-    alert("Diary berhasil disimpan 🌸");
+  const diaries = readStorage(STORAGE.diary);
+  diaries.unshift(diary);
+  saveStorage(STORAGE.diary, diaries);
+
+  $("diaryTitle").value = "";
+  $("diaryMood").value = "";
+  $("diaryContent").value = "";
+  $("diaryDate").value = new Date().toISOString().slice(0, 10);
+
+  renderDiaries();
+
+  alert("Cerita berhasil disimpan 🌸");
 }
 
 function renderDiaries() {
+  const diaries = readStorage(STORAGE.diary);
+  $("diaryCount").textContent = diaries.length;
 
-    const list = $("diaryList");
+  if (!diaries.length) {
+    $("diaryList").innerHTML = `
+      <div class="empty-state">
+        <span>📔</span>
+        Belum ada cerita tersimpan. Mulai tulis diary pertamamu!
+      </div>
+    `;
+    return;
+  }
 
-    if (!diaries.length) {
-        list.innerHTML = `
-            <div class="info-panel">
-                <h3>🌸 Belum ada diary</h3>
-                <p>Catatan pribadimu akan tampil di sini setelah disimpan.</p>
-            </div>
-        `;
-        return;
-    }
-
-    list.innerHTML = diaries.map(item => `
-        <article class="history-item">
-
-            <h3>${escapeHTML(item.title)}</h3>
-
-            <small>
-                ${escapeHTML(item.date)} ·
-                ${escapeHTML(item.mood)}
-            </small>
-
-            <p>${escapeHTML(item.content).replace(/\n/g, "<br>")}</p>
-
-            <button class="delete-btn" data-delete="${Number(item.id)}">
-                <i class="fa-solid fa-trash"></i>
-                Hapus Catatan
-            </button>
-
-        </article>
-    `).join("");
+  $("diaryList").innerHTML = diaries.map(diary => `
+    <article class="history-item">
+      <h3>🌸 ${escapeHTML(diary.title)}</h3>
+      <div class="history-meta">
+        ${escapeHTML(diary.date)} · ${escapeHTML(diary.mood)}
+      </div>
+      <p>${escapeHTML(diary.content).replace(/\n/g, "<br>")}</p>
+      <button class="delete-btn" data-delete-diary="${diary.id}">
+        <i class="fa-solid fa-trash"></i> Hapus cerita
+      </button>
+    </article>
+  `).join("");
 }
 
 function deleteDiary(id) {
+  const diaries = readStorage(STORAGE.diary);
+  const updated = diaries.filter(item => item.id !== id);
 
-    if (!confirm("Yakin ingin menghapus catatan diary ini?")) {
-        return;
-    }
-
-    const updated = diaries.filter(item => item.id !== id);
-
-    if (!saveData("berryDiaries", updated)) {
-        return;
-    }
-
-    diaries = updated;
-
-    renderDiaries();
-    updateDashboard();
+  saveStorage(STORAGE.diary, updated);
+  renderDiaries();
+  renderHistory();
 }
 
-// ==========================================
-// EVENT LISTENERS
-// ==========================================
+/* ==================================
+   HISTORY
+================================== */
 
-// INTRO BUTTON
+function renderHistory() {
+  const diaries = readStorage(STORAGE.diary);
+  const checkups = readStorage(STORAGE.checkup);
 
-$("enterButton").addEventListener("click", enterClinic);
+  const items = [
+    ...diaries.map(item => ({
+      type: "Diary Pasien",
+      date: item.date,
+      title: item.title,
+      description: item.content,
+      icon: "📔",
+      timestamp: item.id
+    })),
 
-// NAVIGATION BUTTONS
+    ...checkups.map(item => ({
+      type: "Pemeriksaan Harian",
+      date: item.date,
+      title: "Catatan Kesehatan",
+      description: `Tubuh: ${item.body} · Mood: ${item.mood} · Tidur: ${item.sleep}`,
+      icon: "🩺",
+      timestamp: item.id
+    }))
+  ].sort((a, b) => b.timestamp - a.timestamp);
 
-document.querySelectorAll("[data-page]").forEach(button => {
+  if (!items.length) {
+    $("historyList").innerHTML = `
+      <div class="empty-state">
+        <span>🌿</span>
+        Belum ada riwayat aktivitas.
+      </div>
+    `;
+    return;
+  }
 
-    button.addEventListener("click", () => {
-        navigate(button.dataset.page);
-    });
+  $("historyList").innerHTML = items.map(item => `
+    <article class="history-item">
+      <div class="history-meta">${item.icon} ${escapeHTML(item.type)} · ${escapeHTML(item.date)}</div>
+      <h3>${escapeHTML(item.title)}</h3>
+      <p>${escapeHTML(item.description).replace(/\n/g, "<br>")}</p>
+    </article>
+  `).join("");
+}
 
-});
-
-// DASHBOARD SERVICE CARDS AND SHORTCUTS
-
-document.querySelectorAll("[data-go]").forEach(button => {
-
-    button.addEventListener("click", () => {
-        navigate(button.dataset.go);
-    });
-
-});
-
-// MEDICAL BUTTONS
-
-$("generalButton").addEventListener("click", checkGeneral);
-
-$("psychologyButton").addEventListener("click", checkPsychology);
-
-$("dailyButton").addEventListener("click", dailyCheckup);
-
-// PHARMACY
-
-$("medicineSearch").addEventListener("input", searchMedicine);
-
-$("medicineGrid").addEventListener("click", event => {
-
-    const button = event.target.closest("[data-medicine]");
-
-    if (!button) return;
-
-    medicineDetail(button.dataset.medicine);
-});
-
-// DIARY
-
-$("saveDiaryButton").addEventListener("click", saveDiary);
-
-$("diaryList").addEventListener("click", event => {
-
-    const button = event.target.closest("[data-delete]");
-
-    if (!button) return;
-
-    deleteDiary(Number(button.dataset.delete));
-});
-
-// ==========================================
-// INITIALIZE
-// ==========================================
+/* ==================================
+   INITIALIZATION
+================================== */
 
 function initializeClinic() {
+  const now = new Date();
 
-    const today = new Date();
+  $("todayDate").textContent = now.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
 
-    $("todayDate").textContent =
-        today.toLocaleDateString("id-ID", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        });
+  $("welcomeDate").textContent = now.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
 
-    $("diaryDate").value =
-        today.toLocaleDateString("en-CA");
+  $("diaryDate").value = now.toISOString().slice(0, 10);
 
-    renderDiaries();
-    renderHistory();
-    updateDashboard();
+  initializeNavigation();
+  initializePharmacy();
 
+  $("generalButton").addEventListener("click", handleGeneralConsultation);
+  $("psychologyButton").addEventListener("click", handlePsychology);
+  $("dailyButton").addEventListener("click", handleDailyCheckup);
+  $("saveDiaryButton").addEventListener("click", handleSaveDiary);
+
+  $("diaryList").addEventListener("click", event => {
+    const button = event.target.closest("[data-delete-diary]");
+
+    if (!button) return;
+
+    const id = Number(button.dataset.deleteDiary);
+
+    if (confirm("Yakin ingin menghapus cerita ini?")) {
+      deleteDiary(id);
+    }
+  });
+
+  renderDiaries();
+  renderHistory();
 }
 
-initializeClinic();
+document.addEventListener("DOMContentLoaded", initializeClinic);
