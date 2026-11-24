@@ -479,6 +479,28 @@ function initializeClinic() {
   renderDiaries();
   renderHistory();
 }
+document.addEventListener("DOMContentLoaded", function () {
+
+    const enterButton = document.getElementById("enterButton");
+    const intro = document.getElementById("intro");
+    const app = document.getElementById("app");
+
+    if (enterButton) {
+        enterButton.addEventListener("click", function () {
+
+            if (intro) {
+                intro.style.display = "none";
+            }
+
+            if (app) {
+                app.classList.remove("hidden");
+                app.style.display = "block";
+            }
+
+        });
+    }
+
+});
 
 document.addEventListener("DOMContentLoaded", initializeClinic);
 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
